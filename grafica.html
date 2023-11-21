@@ -1,0 +1,106 @@
+<!--<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualización de Datos MQTT</title>
+</head>
+<body>
+
+  <h1>Datos MQTT</h1>
+  <div id="datos"></div>
+
+  <script>
+    // Configuración del cliente MQTT
+      var broker = 'mqtt://test.mosquitto.org'; // Reemplaza 'tu-broker' con la dirección de tu broker MQTT
+    var client = new Paho.MQTT.Client(broker, 'clienteId_' + Math.random().toString(16).substr(2, 8));
+    var topico = '/SEIoT/RX_TEST'; // Reemplaza 'tu-topico' con el tema MQTT que estás utilizando
+
+    // Establecer las funciones de devolución de llamada
+    client.onConnectionLost = onConnectionLost;
+    client.onMessageArrived = onMessageArrived;
+
+    // Conectar al broker MQTT
+    client.connect({ onSuccess: onConnect });
+
+    // Función de devolución de llamada cuando la conexión se establece
+    function onConnect() {
+      console.log('Conexión exitosa');
+      // Suscribirse al tema
+      client.subscribe(topico);
+    }
+
+    // Función de devolución de llamada cuando se pierde la conexión
+    function onConnectionLost(responseObject) {
+      if (responseObject.errorCode !== 0) {
+        console.log('Conexión perdida: ' + responseObject.errorMessage);
+      }
+    }
+
+    // Función de devolución de llamada cuando llega un mensaje
+    function onMessageArrived(message) {
+      console.log('Mensaje recibido: ' + message.payloadString);
+
+      // Actualizar la página con el nuevo dato recibido
+      var datosElemento = document.getElementById('datos');
+      datosElemento.innerHTML = 'Último dato recibido: ' + message.payloadString;
+    }
+  </script>
+
+</body>
+</html>
+-->
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visualización de Datos MQTT</title>
+</head>
+<body>
+
+  <h1>Datos MQTT</h1>
+  <div id="datos"></div>
+
+  <script>
+    // Configuración del cliente MQTT sobre WebSocket
+    var broker = 'ws://test.mosquitto.org:1883'; // Cambia la dirección y puerto según tu configuración
+    var client = new Paho.MQTT.Client(broker, 'clienteId_' + Math.random().toString(16).substr(2, 8));
+    var topico = '/SEIoT/RX_TEST'; // Reemplaza 'tu-topico' con el tema MQTT que estás utilizando
+
+    // Establecer las funciones de devolución de llamada
+    client.onConnectionLost = onConnectionLost;
+    client.onMessageArrived = onMessageArrived;
+
+    // Conectar al broker MQTT sobre WebSocket
+    client.connect({ onSuccess: onConnect });
+
+    // Función de devolución de llamada cuando la conexión se establece
+    function onConnect() {
+      console.log('Conexión exitosa');
+      // Suscribirse al tema
+      client.subscribe(topico);
+    }
+
+    // Función de devolución de llamada cuando se pierde la conexión
+    function onConnectionLost(responseObject) {
+      if (responseObject.errorCode !== 0) {
+        console.log('Conexión perdida: ' + responseObject.errorMessage);
+      }
+    }
+
+    // Función de devolución de llamada cuando llega un mensaje
+    function onMessageArrived(message) {
+      console.log('Mensaje recibido: ' + message.payloadString);
+
+      // Actualizar la página con el nuevo dato recibido
+      var datosElemento = document.getElementById('datos');
+      datosElemento.innerHTML = 'Último dato recibido: ' + message.payloadString;
+    }
+  </script>
+
+</body>
+</html>
